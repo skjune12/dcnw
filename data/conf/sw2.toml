@@ -1,0 +1,107 @@
+[global.config]
+as = 65045
+router-id = "192.168.0.5"
+
+[global.use-multiple-paths.config]
+enabled = true
+
+[[neighbors]]
+[neighbors.config]
+neighbor-address = "192.168.25.1"
+peer-as = 65000
+
+[[neighbors.afi-safis]]
+[neighbors.afi-safis.config]
+afi-safi-name = "ipv4-unicast"
+
+[[neighbors.afi-safis]]
+[neighbors.afi-safis.config]
+afi-safi-name  = "ipv4-flowspec"
+
+[[neighbors]]
+[neighbors.config]
+neighbor-address = "192.168.35.1"
+peer-as = 65000
+
+[[neighbors.afi-safis]]
+[neighbors.afi-safis.config]
+afi-safi-name = "ipv4-unicast"
+
+[[neighbors.afi-safis]]
+[neighbors.afi-safis.config]
+afi-safi-name  = "ipv4-flowspec"
+
+[[neighbors]]
+[neighbors.config]
+neighbor-address = "192.168.45.1"
+peer-as = 65045
+
+[[neighbors.afi-safis]]
+[neighbors.afi-safis.config]
+afi-safi-name = "ipv4-unicast"
+
+[[neighbors.afi-safis]]
+[neighbors.afi-safis.config]
+afi-safi-name  = "ipv4-flowspec"
+
+[neighbors.route-reflector.config]
+route-reflector-client = true
+route-reflector-cluster-id = "192.168.0.5"
+
+[[neighbors]]
+[neighbors.config]
+neighbor-address = "192.168.51.2"
+peer-as = 65045
+
+[[neighbors.afi-safis]]
+[neighbors.afi-safis.config]
+afi-safi-name = "ipv4-unicast"
+
+[[neighbors.afi-safis]]
+[neighbors.afi-safis.config]
+afi-safi-name  = "ipv4-flowspec"
+
+[neighbors.route-reflector.config]
+route-reflector-client = true
+route-reflector-cluster-id = "192.168.0.5"
+
+[[neighbors]]
+[neighbors.config]
+neighbor-address = "192.168.52.2"
+peer-as = 65045
+
+[[neighbors.afi-safis]]
+[neighbors.afi-safis.config]
+afi-safi-name = "ipv4-unicast"
+
+[[neighbors.afi-safis]]
+[neighbors.afi-safis.config]
+afi-safi-name  = "ipv4-flowspec"
+
+[neighbors.route-reflector.config]
+route-reflector-client = true
+route-reflector-cluster-id = "192.168.0.5"
+
+[[neighbors]]
+[neighbors.config]
+neighbor-address = "192.168.53.2"
+peer-as = 65045
+
+[[neighbors.afi-safis]]
+[neighbors.afi-safis.config]
+afi-safi-name = "ipv4-unicast"
+
+[[neighbors.afi-safis]]
+[neighbors.afi-safis.config]
+afi-safi-name  = "ipv4-flowspec"
+
+[neighbors.route-reflector.config]
+route-reflector-client = true
+route-reflector-cluster-id = "192.168.0.5"
+
+[zebra]
+[zebra.config]
+enabled = true
+url = "unix:/tmp/sw2_zebra.vty"
+redistribute-route-type-list = ["connect"]
+version = 2

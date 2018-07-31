@@ -1,0 +1,39 @@
+[global.config]
+as = 65067
+router-id = "192.168.1.6"
+
+[global.use-multiple-paths.config]
+enabled = true
+
+[[neighbors]]
+[neighbors.config]
+neighbor-address = "192.168.66.1"
+peer-as = 65067
+
+[[neighbors.afi-safis]]
+[neighbors.afi-safis.config]
+afi-safi-name = "ipv4-unicast"
+
+[[neighbors.afi-safis]]
+[neighbors.afi-safis.config]
+afi-safi-name  = "ipv4-flowspec"
+
+[[neighbors]]
+[neighbors.config]
+neighbor-address = "192.168.76.1"
+peer-as = 65067
+
+[[neighbors.afi-safis]]
+[neighbors.afi-safis.config]
+afi-safi-name = "ipv4-unicast"
+
+[[neighbors.afi-safis]]
+[neighbors.afi-safis.config]
+afi-safi-name  = "ipv4-flowspec"
+
+[zebra]
+[zebra.config]
+enabled = true
+url = "unix:/tmp/sv6_zebra.vty"
+redistribute-route-type-list = ["connect"]
+version = 2
