@@ -1,40 +1,14 @@
 [global.config]
-as = 65000
-router-id = "192.168.0.3"
+as = 65005
+router-id = "192.168.0.5"
 
 [global.use-multiple-paths.config]
 enabled = true
 
+# eg1
 [[neighbors]]
 [neighbors.config]
-neighbor-address = "192.168.13.1"
-peer-as = 65000
-
-[[neighbors.afi-safis]]
-[neighbors.afi-safis.config]
-afi-safi-name = "ipv4-unicast"
-
-[[neighbors.afi-safis]]
-[neighbors.afi-safis.config]
-afi-safi-name  = "ipv4-flowspec"
-
-[[neighbors]]
-[neighbors.config]
-neighbor-address = "192.168.23.1"
-peer-as = 65000
-
-[[neighbors.afi-safis]]
-[neighbors.afi-safis.config]
-afi-safi-name = "ipv4-unicast"
-
-[[neighbors.afi-safis]]
-[neighbors.afi-safis.config]
-afi-safi-name  = "ipv4-flowspec"
-
-# sv1
-[[neighbors]]
-[neighbors.config]
-neighbor-address = "192.168.31.2"
+neighbor-address = "192.168.15.1"
 peer-as = 65001
 
 [[neighbors.afi-safis]]
@@ -45,10 +19,10 @@ afi-safi-name = "ipv4-unicast"
 [neighbors.afi-safis.config]
 afi-safi-name  = "ipv4-flowspec"
 
-# sv2
+# eg2
 [[neighbors]]
 [neighbors.config]
-neighbor-address = "192.168.32.2"
+neighbor-address = "192.168.25.1"
 peer-as = 65002
 
 [[neighbors.afi-safis]]
@@ -59,11 +33,39 @@ afi-safi-name = "ipv4-unicast"
 [neighbors.afi-safis.config]
 afi-safi-name  = "ipv4-flowspec"
 
-# sv3
+# ac4
 [[neighbors]]
 [neighbors.config]
-neighbor-address = "192.168.33.2"
-peer-as = 65003
+neighbor-address = "192.168.54.2"
+peer-as = 65014
+
+[[neighbors.afi-safis]]
+[neighbors.afi-safis.config]
+afi-safi-name = "ipv4-unicast"
+
+[[neighbors.afi-safis]]
+[neighbors.afi-safis.config]
+afi-safi-name  = "ipv4-flowspec"
+
+# ac5
+[[neighbors]]
+[neighbors.config]
+neighbor-address = "192.168.55.2"
+peer-as = 65015
+
+[[neighbors.afi-safis]]
+[neighbors.afi-safis.config]
+afi-safi-name = "ipv4-unicast"
+
+[[neighbors.afi-safis]]
+[neighbors.afi-safis.config]
+afi-safi-name  = "ipv4-flowspec"
+
+# ac6
+[[neighbors]]
+[neighbors.config]
+neighbor-address = "192.168.56.2"
+peer-as = 65016
 
 [[neighbors.afi-safis]]
 [neighbors.afi-safis.config]
@@ -76,6 +78,6 @@ afi-safi-name  = "ipv4-flowspec"
 [zebra]
 [zebra.config]
 enabled = true
-url = "unix:/tmp/sw1_zebra.vty"
+url = "unix:/tmp/cr3_zebra.vty"
 redistribute-route-type-list = ["connect"]
 version = 2

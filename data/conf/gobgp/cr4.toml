@@ -1,14 +1,15 @@
 [global.config]
-as = 65000
+as = 65006
 router-id = "192.168.0.6"
 
 [global.use-multiple-paths.config]
 enabled = true
 
+# eg1
 [[neighbors]]
 [neighbors.config]
 neighbor-address = "192.168.16.1"
-peer-as = 65000
+peer-as = 65001
 
 [[neighbors.afi-safis]]
 [neighbors.afi-safis.config]
@@ -18,10 +19,11 @@ afi-safi-name = "ipv4-unicast"
 [neighbors.afi-safis.config]
 afi-safi-name  = "ipv4-flowspec"
 
+# eg2
 [[neighbors]]
 [neighbors.config]
 neighbor-address = "192.168.26.1"
-peer-as = 65000
+peer-as = 65002
 
 [[neighbors.afi-safis]]
 [neighbors.afi-safis.config]
@@ -31,10 +33,11 @@ afi-safi-name = "ipv4-unicast"
 [neighbors.afi-safis.config]
 afi-safi-name  = "ipv4-flowspec"
 
+# ac4
 [[neighbors]]
 [neighbors.config]
 neighbor-address = "192.168.64.2"
-peer-as = 65004
+peer-as = 65014
 
 [[neighbors.afi-safis]]
 [neighbors.afi-safis.config]
@@ -44,10 +47,11 @@ afi-safi-name = "ipv4-unicast"
 [neighbors.afi-safis.config]
 afi-safi-name  = "ipv4-flowspec"
 
+# ac5
 [[neighbors]]
 [neighbors.config]
 neighbor-address = "192.168.65.2"
-peer-as = 65005
+peer-as = 65015
 
 [[neighbors.afi-safis]]
 [neighbors.afi-safis.config]
@@ -57,10 +61,11 @@ afi-safi-name = "ipv4-unicast"
 [neighbors.afi-safis.config]
 afi-safi-name  = "ipv4-flowspec"
 
+# ac6
 [[neighbors]]
 [neighbors.config]
 neighbor-address = "192.168.66.2"
-peer-as = 65006
+peer-as = 65016
 
 [[neighbors.afi-safis]]
 [neighbors.afi-safis.config]
@@ -73,6 +78,6 @@ afi-safi-name  = "ipv4-flowspec"
 [zebra]
 [zebra.config]
 enabled = true
-url = "unix:/tmp/sw4_zebra.vty"
+url = "unix:/tmp/cr4_zebra.vty"
 redistribute-route-type-list = ["connect"]
 version = 2

@@ -13,16 +13,16 @@ run () {
 }
 
 create_netns() {
-  # create veth pair between cr and ag
-  ag_max=2
-  sw_max=4
-  sv_max=6
+  # create veth pair between cr and eg
+  eg_max=2
+  cr_max=4
+  ac_max=6
 
   # create netns
-  for ((ag_num=1; ag_num <= $ag_max; ag_num++))
+  for ((eg_num=1; eg_num <= $eg_max; eg_num++))
   do
-    netns_name="ag${ag_num}"
-    ag_devid=$ag_num
+    netns_name="eg${eg_num}"
+    eg_devid=$eg_num
 
     run ip netns add ${netns_name}
     run ip netns exec ${netns_name} /sbin/sysctl -w net.ipv4.ip_forward=1
@@ -35,10 +35,10 @@ create_netns() {
     run ip netns exec ${netns_name} gobgpd -f /vagrant_data/conf/gobgp/${netns_name}.toml > /vagrant_data/log/${netns_name}.log &
   done
 
-  # create netns_sw
-  for ((sw_num=1; sw_num <= $sw_max; sw_num++))
+  # create netns_cr
+  for ((cr_num=1; cr_num <= $cr_max; cr_num++))
   do
-    netns_name="sw${sw_num}"
+    netns_name="cr${cr_num}"
     run ip netns add ${netns_name}
     run ip netns exec ${netns_name} /sbin/sysctl -w net.ipv4.ip_forward=1
     run ip netns exec ${netns_name} ip link set lo up
@@ -51,10 +51,10 @@ create_netns() {
     run ip netns exec ${netns_name} gobgpd -f /vagrant_data/conf/gobgp/${netns_name}.toml > /vagrant_data/log/${netns_name}.log &
   done
 
-  # create netns sv
-  for ((sv_num=1; sv_num <= $sv_max; sv_num++))
+  # create netns ac
+  for ((ac_num=1; ac_num <= $ac_max; ac_num++))
   do
-    netns_name="sv${sv_num}"
+    netns_name="ac${ac_num}"
     run ip netns add ${netns_name}
     run ip netns exec ${netns_name} ip link set lo up
 
@@ -65,64 +65,64 @@ create_netns() {
     run ip netns exec ${netns_name} gobgpd -f /vagrant_data/conf/gobgp/${netns_name}.toml > /vagrant_data/log/${netns_name}.log &
   done
 
-  # create veth pair between ag and sw
-  for ((ag_num=1; ag_num <= $ag_max; ag_num++))
+  # create veth pair between eg and cr
+  for ((eg_num=1; eg_num <= $eg_max; eg_num++))
   do
-    ag_netns_name="ag${ag_num}"
-    ag_devid=$ag_num
-    for ((sw_num=1; sw_num <= $sw_max; sw_num++))
+    eg_netns_name="eg${eg_num}"
+    eg_devid=$eg_num
+    for ((cr_num=1; cr_num <= $cr_max; cr_num++))
     do
-      sw_devid=$(($ag_max+$sw_num))
-      sw_netns_name="sw${sw_num}"
-      run ip link add ag${ag_num}_sw${sw_num} type veth peer name sw${sw_num}_ag${ag_num}
-      run ip link set ag${ag_num}_sw${sw_num} netns ${ag_netns_name}
-      run ip link set sw${sw_num}_ag${ag_num} netns ${sw_netns_name}
+      cr_devid=$(($eg_max+$cr_num))
+      cr_netns_name="cr${cr_num}"
+      run ip link add eg${eg_num}_cr${cr_num} type veth peer name cr${cr_num}_eg${eg_num}
+      run ip link set eg${eg_num}_cr${cr_num} netns ${eg_netns_name}
+      run ip link set cr${cr_num}_eg${eg_num} netns ${cr_netns_name}
 
-      run ip netns exec ${ag_netns_name} ip link set ag${ag_num}_sw${sw_num} up
-      run ip netns exec ${ag_netns_name} ip addr add 192.168.${ag_devid}${sw_devid}.1/30 dev ag${ag_num}_sw${sw_num}
-      run ip netns exec ${sw_netns_name} ip link set sw${sw_num}_ag${ag_num} up
-      run ip netns exec ${sw_netns_name} ip addr add 192.168.${ag_devid}${sw_devid}.2/30 dev sw${sw_num}_ag${ag_num}
+      run ip netns exec ${eg_netns_name} ip link set eg${eg_num}_cr${cr_num} up
+      run ip netns exec ${eg_netns_name} ip addr add 192.168.${eg_devid}${cr_devid}.1/30 dev eg${eg_num}_cr${cr_num}
+      run ip netns exec ${cr_netns_name} ip link set cr${cr_num}_eg${eg_num} up
+      run ip netns exec ${cr_netns_name} ip addr add 192.168.${eg_devid}${cr_devid}.2/30 dev cr${cr_num}_eg${eg_num}
     done
   done
 
-  # create veth pair between sw and sv
-  for ((sw_num=1; sw_num <= $sw_max; sw_num++))
+  # create veth pair between cr and ac
+  for ((cr_num=1; cr_num <= $cr_max; cr_num++))
   do
-    sw_netns_name="sw${sw_num}"
-    sw_devid=$(($ag_max+$sw_num))
-    for ((sv_num=1; sv_num <= $sv_max; sv_num++))
+    cr_netns_name="cr${cr_num}"
+    cr_devid=$(($eg_max+$cr_num))
+    for ((ac_num=1; ac_num <= $ac_max; ac_num++))
     do
-      sv_netns_name="sv${sv_num}"
-      sv_devid=${sv_num}
+      ac_netns_name="ac${ac_num}"
+      ac_devid=${ac_num}
 
-      if [[ $sw_num -le $(($sw_max/2)) ]]; then
-        if [[ $sv_num -gt $(($sv_max/2)) ]]; then
+      if [[ $cr_num -le $(($cr_max/2)) ]]; then
+        if [[ $ac_num -gt $(($ac_max/2)) ]]; then
           continue;
         fi
 
-        run ip link add sw${sw_num}_sv${sv_num} type veth peer name sv${sv_num}_sw${sw_num}
-        run ip link set sw${sw_num}_sv${sv_num} netns ${sw_netns_name}
-        run ip link set sv${sv_num}_sw${sw_num} netns ${sv_netns_name}
-        run ip netns exec ${sw_netns_name} ip link set sw${sw_num}_sv${sv_num} up
-        run ip netns exec ${sw_netns_name} ip addr add 192.168.${sw_devid}${sv_devid}.1/30 dev sw${sw_num}_sv${sv_num}
-        run ip netns exec ${sv_netns_name} ip link set sv${sv_num}_sw${sw_num} up
-        run ip netns exec ${sv_netns_name} ip addr add 192.168.${sw_devid}${sv_devid}.2/30 dev sv${sv_num}_sw${sw_num}
+        run ip link add cr${cr_num}_ac${ac_num} type veth peer name ac${ac_num}_cr${cr_num}
+        run ip link set cr${cr_num}_ac${ac_num} netns ${cr_netns_name}
+        run ip link set ac${ac_num}_cr${cr_num} netns ${ac_netns_name}
+        run ip netns exec ${cr_netns_name} ip link set cr${cr_num}_ac${ac_num} up
+        run ip netns exec ${cr_netns_name} ip addr add 192.168.${cr_devid}${ac_devid}.1/30 dev cr${cr_num}_ac${ac_num}
+        run ip netns exec ${ac_netns_name} ip link set ac${ac_num}_cr${cr_num} up
+        run ip netns exec ${ac_netns_name} ip addr add 192.168.${cr_devid}${ac_devid}.2/30 dev ac${ac_num}_cr${cr_num}
 
-      elif [[ $sw_num -gt $(($sw_max/2)) ]]; then
-        if [[ $sv_num -le $(($sv_max/2)) ]]; then
+      elif [[ $cr_num -gt $(($cr_max/2)) ]]; then
+        if [[ $ac_num -le $(($ac_max/2)) ]]; then
           continue;
         fi
 
-        run ip link add sw${sw_num}_sv${sv_num} type veth peer name sv${sv_num}_sw${sw_num}
-        run ip link set sw${sw_num}_sv${sv_num} netns ${sw_netns_name}
-        run ip link set sv${sv_num}_sw${sw_num} netns ${sv_netns_name}
-        run ip netns exec ${sw_netns_name} ip link set sw${sw_num}_sv${sv_num} up
-        run ip netns exec ${sw_netns_name} ip addr add 192.168.${sw_devid}${sv_devid}.1/30 dev sw${sw_num}_sv${sv_num}
-        run ip netns exec ${sv_netns_name} ip link set sv${sv_num}_sw${sw_num} up
-        run ip netns exec ${sv_netns_name} ip addr add 192.168.${sw_devid}${sv_devid}.2/30 dev sv${sv_num}_sw${sw_num}
+        run ip link add cr${cr_num}_ac${ac_num} type veth peer name ac${ac_num}_cr${cr_num}
+        run ip link set cr${cr_num}_ac${ac_num} netns ${cr_netns_name}
+        run ip link set ac${ac_num}_cr${cr_num} netns ${ac_netns_name}
+        run ip netns exec ${cr_netns_name} ip link set cr${cr_num}_ac${ac_num} up
+        run ip netns exec ${cr_netns_name} ip addr add 192.168.${cr_devid}${ac_devid}.1/30 dev cr${cr_num}_ac${ac_num}
+        run ip netns exec ${ac_netns_name} ip link set ac${ac_num}_cr${cr_num} up
+        run ip netns exec ${ac_netns_name} ip addr add 192.168.${cr_devid}${ac_devid}.2/30 dev ac${ac_num}_cr${cr_num}
 
       fi
-    done  # end of create veth pair between sw and sv
+    done  # end of create veth pair between cr and ac
   done
 }
 
@@ -131,29 +131,29 @@ destroy_netns() {
   run ps aux | grep gobgpd | grep -v grep | awk '{ print "kill -9", $2 }' | sh
   run ps aux | grep zebra | grep -v grep | awk '{ print "kill -9", $2 }' | sh
 
-  for ((ag_num=1; ag_num <= $ag_max; ag_num++))
+  for ((eg_num=1; eg_num <= $eg_max; eg_num++))
   do
-    netns_name="ag${ag_num}"
+    netns_name="eg${eg_num}"
     run ip netns exec ${netns_name} /sbin/sysctl -w net.ipv4.ip_forward=0
     run ip netns del ${netns_name}
   done
 
-  for ((sw_num=1; sw_num <= $sw_max; sw_num++))
+  for ((cr_num=1; cr_num <= $cr_max; cr_num++))
   do
-    netns_name="sw${sw_num}"
+    netns_name="cr${cr_num}"
     run ip netns exec ${netns_name} /sbin/sysctl -w net.ipv4.ip_forward=0
     run ip netns del ${netns_name}
   done
 
-  for ((sv_num=1; sv_num <= $sv_max; sv_num++))
+  for ((ac_num=1; ac_num <= $ac_max; ac_num++))
   do
-    netns_name="sv${sv_num}"
+    netns_name="ac${ac_num}"
     run ip netns del ${netns_name}
   done
 
-  unset ag_max
-  unset sw_max
-  unset sv_max
+  unset eg_max
+  unset cr_max
+  unset ac_max
 }
 
 stop () {
