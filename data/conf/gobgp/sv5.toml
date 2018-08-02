@@ -1,5 +1,5 @@
 [global.config]
-as = 65067
+as = 65005
 router-id = "192.168.1.5"
 
 [global.use-multiple-paths.config]
@@ -7,8 +7,8 @@ enabled = true
 
 [[neighbors]]
 [neighbors.config]
-neighbor-address = "192.168.65.1"
-peer-as = 65067
+neighbor-address = "192.168.55.1"
+peer-as = 65000
 
 [[neighbors.afi-safis]]
 [neighbors.afi-safis.config]
@@ -20,8 +20,8 @@ afi-safi-name  = "ipv4-flowspec"
 
 [[neighbors]]
 [neighbors.config]
-neighbor-address = "192.168.75.1"
-peer-as = 65067
+neighbor-address = "192.168.65.1"
+peer-as = 65000
 
 [[neighbors.afi-safis]]
 [neighbors.afi-safis.config]
