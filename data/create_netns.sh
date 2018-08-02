@@ -30,10 +30,11 @@ create_netns() {
     run ip netns exec ${netns_name} ip link set lo up
 
     # zebra configuration
-    run ip netns exec ${netns_name} /usr/sbin/zebra -d -f /vagrant_data/zebra.conf -i /tmp/${netns_name}_zebra.pid -A 127.0.0.1 -z /tmp/${netns_name}_zebra.vty
+    run ip netns exec ${netns_name} /usr/sbin/zebra -d -f /vagrant_data/conf/zebra/${netns_name}.conf -i /tmp/${netns_name}_zebra.pid -A 127.0.0.1 -z /tmp/${netns_name}_zebra.vty
+    run ip netns exec ${netns_name} /usr/sbin/ospfd -d -f /vagrant_data/conf/ospfd/${netns_name}.conf -i /tmp/${netns_name}_ospfd.pid -A 127.0.0.1 -z /tmp/${netns_name}_zebra.vty
 
     # gobgp configuration
-    # run ip netns exec ${netns_name} gobgpd > ~/gobgpd_${netns_name}.log &
+    run ip netns exec ${netns_name} gobgpd -f /vagrant_data/conf/gobgp/${netns_name}.toml > /vagrant_data/log/${netns_name}.log &
   done
 
   # create netns
@@ -47,10 +48,11 @@ create_netns() {
     run ip netns exec ${netns_name} ip link set lo up
 
     # zebra configuration
-    run ip netns exec ${netns_name} /usr/sbin/zebra -d -f /vagrant_data/zebra.conf -i /tmp/${netns_name}_zebra.pid -A 127.0.0.1 -z /tmp/${netns_name}_zebra.vty
+    run ip netns exec ${netns_name} /usr/sbin/zebra -d -f /vagrant_data/conf/zebra/${netns_name}.conf -i /tmp/${netns_name}_zebra.pid -A 127.0.0.1 -z /tmp/${netns_name}_zebra.vty
+    run ip netns exec ${netns_name} /usr/sbin/ospfd -d -f /vagrant_data/conf/ospfd/${netns_name}.conf -i /tmp/${netns_name}_ospfd.pid -A 127.0.0.1 -z /tmp/${netns_name}_zebra.vty
 
     # gobgp configuration
-    # run ip netns exec ${netns_name} gobgpd > ~/gobgpd_${netns_name}.log &
+    run ip netns exec ${netns_name} gobgpd -f /vagrant_data/conf/gobgp/${netns_name}.toml > /vagrant_data/log/${netns_name}.log &
   done
 
   # create netns_sw
@@ -60,8 +62,13 @@ create_netns() {
     run ip netns add ${netns_name}
     run ip netns exec ${netns_name} /sbin/sysctl -w net.ipv4.ip_forward=1
     run ip netns exec ${netns_name} ip link set lo up
-    run ip netns exec ${netns_name} /usr/sbin/zebra -d -f /vagrant_data/zebra.conf -i /tmp/${netns_name}_zebra.pid -A 127.0.0.1 -z /tmp/${netns_name}_zebra.vty
-    # run ip netns exec ${netns_name} gobgpd > ~/gobgpd_${netns_name}.log &
+
+    # zebra configuration
+    run ip netns exec ${netns_name} /usr/sbin/zebra -d -f /vagrant_data/conf/zebra/${netns_name}.conf -i /tmp/${netns_name}_zebra.pid -A 127.0.0.1 -z /tmp/${netns_name}_zebra.vty
+    run ip netns exec ${netns_name} /usr/sbin/ospfd -d -f /vagrant_data/conf/ospfd/${netns_name}.conf -i /tmp/${netns_name}_ospfd.pid -A 127.0.0.1 -z /tmp/${netns_name}_zebra.vty
+
+    # gobgp configuration
+    run ip netns exec ${netns_name} gobgpd -f /vagrant_data/conf/gobgp/${netns_name}.toml > /vagrant_data/log/${netns_name}.log &
   done
 
   # create netns sv
@@ -70,8 +77,13 @@ create_netns() {
     netns_name="sv${sv_num}"
     run ip netns add ${netns_name}
     run ip netns exec ${netns_name} ip link set lo up
-    run ip netns exec ${netns_name} /usr/sbin/zebra -d -f /vagrant_data/zebra.conf -i /tmp/${netns_name}_zebra.pid -A 127.0.0.1 -z /tmp/${netns_name}_zebra.vty
-    # run ip netns exec ${netns_name} gobgpd > ~/gobgpd_${netns_name}.log &
+
+    # zebra configuration
+    run ip netns exec ${netns_name} /usr/sbin/zebra -d -f /vagrant_data/conf/zebra/${netns_name}.conf -i /tmp/${netns_name}_zebra.pid -A 127.0.0.1 -z /tmp/${netns_name}_zebra.vty
+    run ip netns exec ${netns_name} /usr/sbin/ospfd -d -f /vagrant_data/conf/ospfd/${netns_name}.conf -i /tmp/${netns_name}_ospfd.pid -A 127.0.0.1 -z /tmp/${netns_name}_zebra.vty
+
+    # gobgp configuration
+    run ip netns exec ${netns_name} gobgpd -f /vagrant_data/conf/gobgp/${netns_name}.toml > /vagrant_data/log/${netns_name}.log &
   done
 
   # create veth pair between cr and ag
@@ -200,8 +212,9 @@ create_netns() {
 
 destroy_netns() {
   # kill zebra
-  run ps aux | grep zebra | grep -v grep | awk '{ print "kill -9", $2 }' | sh
   run ps aux | grep gobgpd | grep -v grep | awk '{ print "kill -9", $2 }' | sh
+  run ps aux | grep ospfd | grep -v grep | awk '{ print "kill -9", $2 }' | sh
+  run ps aux | grep zebra | grep -v grep | awk '{ print "kill -9", $2 }' | sh
 
   for ((cr_num=1; cr_num <= $cr_max; cr_num++))
   do
