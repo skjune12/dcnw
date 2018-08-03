@@ -33,6 +33,48 @@ afi-safi-name = "ipv4-unicast"
 [neighbors.afi-safis.config]
 afi-safi-name  = "ipv4-flowspec"
 
+# ac1
+[[neighbors]]
+[neighbors.config]
+neighbor-address = "192.168.61.2"
+peer-as = 65011
+
+[[neighbors.afi-safis]]
+[neighbors.afi-safis.config]
+afi-safi-name = "ipv4-unicast"
+
+[[neighbors.afi-safis]]
+[neighbors.afi-safis.config]
+afi-safi-name  = "ipv4-flowspec"
+
+# ac2
+[[neighbors]]
+[neighbors.config]
+neighbor-address = "192.168.62.2"
+peer-as = 65012
+
+[[neighbors.afi-safis]]
+[neighbors.afi-safis.config]
+afi-safi-name = "ipv4-unicast"
+
+[[neighbors.afi-safis]]
+[neighbors.afi-safis.config]
+afi-safi-name  = "ipv4-flowspec"
+
+# ac3
+[[neighbors]]
+[neighbors.config]
+neighbor-address = "192.168.63.2"
+peer-as = 65013
+
+[[neighbors.afi-safis]]
+[neighbors.afi-safis.config]
+afi-safi-name = "ipv4-unicast"
+
+[[neighbors.afi-safis]]
+[neighbors.afi-safis.config]
+afi-safi-name  = "ipv4-flowspec"
+
 # ac4
 [[neighbors]]
 [neighbors.config]

@@ -5,6 +5,34 @@ router-id = "192.168.1.4"
 [global.use-multiple-paths.config]
 enabled = true
 
+# cr1
+[[neighbors]]
+[neighbors.config]
+neighbor-address = "192.168.34.1"
+peer-as = 65003
+
+[[neighbors.afi-safis]]
+[neighbors.afi-safis.config]
+afi-safi-name = "ipv4-unicast"
+
+[[neighbors.afi-safis]]
+[neighbors.afi-safis.config]
+afi-safi-name  = "ipv4-flowspec"
+
+# cr2
+[[neighbors]]
+[neighbors.config]
+neighbor-address = "192.168.44.1"
+peer-as = 65004
+
+[[neighbors.afi-safis]]
+[neighbors.afi-safis.config]
+afi-safi-name = "ipv4-unicast"
+
+[[neighbors.afi-safis]]
+[neighbors.afi-safis.config]
+afi-safi-name  = "ipv4-flowspec"
+
 # cr3
 [[neighbors]]
 [neighbors.config]
