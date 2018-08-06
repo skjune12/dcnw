@@ -1,6 +1,6 @@
 [global.config]
 as = 65002
-router-id = "192.168.0.2"
+router-id = "10.0.0.2"
 
 [global.use-multiple-paths.config]
 enabled = true
@@ -8,7 +8,7 @@ enabled = true
 # cr1
 [[neighbors]]
 [neighbors.config]
-neighbor-address = "192.168.23.2"
+neighbor-address = "10.0.23.2"
 peer-as = 65003
 
 [[neighbors.afi-safis]]
@@ -21,12 +21,12 @@ afi-safi-name  = "ipv4-flowspec"
 
 [neighbors.route-reflector.config]
 route-reflector-client = true
-route-reflector-cluster-id = "192.168.0.2"
+route-reflector-cluster-id = "10.0.0.2"
 
 # cr2
 [[neighbors]]
 [neighbors.config]
-neighbor-address = "192.168.24.2"
+neighbor-address = "10.0.24.2"
 peer-as = 65004
 
 [[neighbors.afi-safis]]
@@ -39,12 +39,12 @@ afi-safi-name  = "ipv4-flowspec"
 
 [neighbors.route-reflector.config]
 route-reflector-client = true
-route-reflector-cluster-id = "192.168.0.2"
+route-reflector-cluster-id = "10.0.0.2"
 
 # cr3
 [[neighbors]]
 [neighbors.config]
-neighbor-address = "192.168.25.2"
+neighbor-address = "10.0.25.2"
 peer-as = 65005
 
 [[neighbors.afi-safis]]
@@ -57,12 +57,12 @@ afi-safi-name  = "ipv4-flowspec"
 
 [neighbors.route-reflector.config]
 route-reflector-client = true
-route-reflector-cluster-id = "192.168.0.2"
+route-reflector-cluster-id = "10.0.0.2"
 
 # cr4
 [[neighbors]]
 [neighbors.config]
-neighbor-address = "192.168.26.2"
+neighbor-address = "10.0.26.2"
 peer-as = 65006
 
 [[neighbors.afi-safis]]
@@ -75,7 +75,7 @@ afi-safi-name  = "ipv4-flowspec"
 
 [neighbors.route-reflector.config]
 route-reflector-client = true
-route-reflector-cluster-id = "192.168.0.2"
+route-reflector-cluster-id = "10.0.0.2"
 
 [zebra]
 [zebra.config]

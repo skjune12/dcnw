@@ -1,6 +1,6 @@
 [global.config]
 as = 65006
-router-id = "192.168.0.6"
+router-id = "10.0.0.6"
 
 [global.use-multiple-paths.config]
 enabled = true
@@ -8,7 +8,7 @@ enabled = true
 # eg1
 [[neighbors]]
 [neighbors.config]
-neighbor-address = "192.168.16.1"
+neighbor-address = "10.0.16.1"
 peer-as = 65001
 
 [[neighbors.afi-safis]]
@@ -22,7 +22,7 @@ afi-safi-name  = "ipv4-flowspec"
 # eg2
 [[neighbors]]
 [neighbors.config]
-neighbor-address = "192.168.26.1"
+neighbor-address = "10.0.26.1"
 peer-as = 65002
 
 [[neighbors.afi-safis]]
@@ -36,7 +36,7 @@ afi-safi-name  = "ipv4-flowspec"
 # ac1
 [[neighbors]]
 [neighbors.config]
-neighbor-address = "192.168.61.2"
+neighbor-address = "10.0.61.2"
 peer-as = 65011
 
 [[neighbors.afi-safis]]
@@ -50,7 +50,7 @@ afi-safi-name  = "ipv4-flowspec"
 # ac2
 [[neighbors]]
 [neighbors.config]
-neighbor-address = "192.168.62.2"
+neighbor-address = "10.0.62.2"
 peer-as = 65012
 
 [[neighbors.afi-safis]]
@@ -64,7 +64,7 @@ afi-safi-name  = "ipv4-flowspec"
 # ac3
 [[neighbors]]
 [neighbors.config]
-neighbor-address = "192.168.63.2"
+neighbor-address = "10.0.63.2"
 peer-as = 65013
 
 [[neighbors.afi-safis]]
@@ -78,7 +78,7 @@ afi-safi-name  = "ipv4-flowspec"
 # ac4
 [[neighbors]]
 [neighbors.config]
-neighbor-address = "192.168.64.2"
+neighbor-address = "10.0.64.2"
 peer-as = 65014
 
 [[neighbors.afi-safis]]
@@ -92,7 +92,7 @@ afi-safi-name  = "ipv4-flowspec"
 # ac5
 [[neighbors]]
 [neighbors.config]
-neighbor-address = "192.168.65.2"
+neighbor-address = "10.0.65.2"
 peer-as = 65015
 
 [[neighbors.afi-safis]]
@@ -106,7 +106,7 @@ afi-safi-name  = "ipv4-flowspec"
 # ac6
 [[neighbors]]
 [neighbors.config]
-neighbor-address = "192.168.66.2"
+neighbor-address = "10.0.66.2"
 peer-as = 65016
 
 [[neighbors.afi-safis]]

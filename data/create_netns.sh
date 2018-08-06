@@ -79,9 +79,9 @@ create_netns() {
       run ip link set cr${cr_num}_eg${eg_num} netns ${cr_netns_name}
 
       run ip netns exec ${eg_netns_name} ip link set eg${eg_num}_cr${cr_num} up
-      run ip netns exec ${eg_netns_name} ip addr add 192.168.${eg_devid}${cr_devid}.1/30 dev eg${eg_num}_cr${cr_num}
+      run ip netns exec ${eg_netns_name} ip addr add 10.0.${eg_devid}${cr_devid}.1/30 dev eg${eg_num}_cr${cr_num}
       run ip netns exec ${cr_netns_name} ip link set cr${cr_num}_eg${eg_num} up
-      run ip netns exec ${cr_netns_name} ip addr add 192.168.${eg_devid}${cr_devid}.2/30 dev cr${cr_num}_eg${eg_num}
+      run ip netns exec ${cr_netns_name} ip addr add 10.0.${eg_devid}${cr_devid}.2/30 dev cr${cr_num}_eg${eg_num}
     done
   done
 
@@ -99,9 +99,9 @@ create_netns() {
       run ip link set cr${cr_num}_ac${ac_num} netns ${cr_netns_name}
       run ip link set ac${ac_num}_cr${cr_num} netns ${ac_netns_name}
       run ip netns exec ${cr_netns_name} ip link set cr${cr_num}_ac${ac_num} up
-      run ip netns exec ${cr_netns_name} ip addr add 192.168.${cr_devid}${ac_devid}.1/30 dev cr${cr_num}_ac${ac_num}
+      run ip netns exec ${cr_netns_name} ip addr add 10.0.${cr_devid}${ac_devid}.1/30 dev cr${cr_num}_ac${ac_num}
       run ip netns exec ${ac_netns_name} ip link set ac${ac_num}_cr${cr_num} up
-      run ip netns exec ${ac_netns_name} ip addr add 192.168.${cr_devid}${ac_devid}.2/30 dev ac${ac_num}_cr${cr_num}
+      run ip netns exec ${ac_netns_name} ip addr add 10.0.${cr_devid}${ac_devid}.2/30 dev ac${ac_num}_cr${cr_num}
 
     done  # end of create veth pair between cr and ac
   done
