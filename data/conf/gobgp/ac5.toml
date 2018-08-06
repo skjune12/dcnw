@@ -1,15 +1,30 @@
 [global.config]
-as = 65015
+as = 65000
 router-id = "10.0.1.5"
 
 [global.use-multiple-paths.config]
 enabled = true
 
+[global.apply-policy.config]
+export-policy-list = ["policy1"]
+
+[[policy-definitions]]
+name = "policy1"
+
+[[policy-definitions.statements]]
+name = "statement1"
+
+[policy-definitions.statements.actions.bgp-actions]
+set-next-hop = "self"
+
+[policy-definitions.statements.actions]
+route-disposition = "accept-route"
+
 # cr1
 [[neighbors]]
 [neighbors.config]
 neighbor-address = "10.0.35.1"
-peer-as = 65003
+peer-as = 65000
 
 [[neighbors.afi-safis]]
 [neighbors.afi-safis.config]
@@ -23,7 +38,7 @@ afi-safi-name  = "ipv4-flowspec"
 [[neighbors]]
 [neighbors.config]
 neighbor-address = "10.0.45.1"
-peer-as = 65004
+peer-as = 65000
 
 [[neighbors.afi-safis]]
 [neighbors.afi-safis.config]
@@ -37,7 +52,7 @@ afi-safi-name  = "ipv4-flowspec"
 [[neighbors]]
 [neighbors.config]
 neighbor-address = "10.0.55.1"
-peer-as = 65005
+peer-as = 65000
 
 [[neighbors.afi-safis]]
 [neighbors.afi-safis.config]
@@ -51,7 +66,7 @@ afi-safi-name  = "ipv4-flowspec"
 [[neighbors]]
 [neighbors.config]
 neighbor-address = "10.0.65.1"
-peer-as = 65006
+peer-as = 65000
 
 [[neighbors.afi-safis]]
 [neighbors.afi-safis.config]
