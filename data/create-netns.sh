@@ -32,7 +32,7 @@ create_netns() {
     run ip netns exec ${netns_name} /usr/sbin/zebra -d -f /vagrant_data/conf/zebra/${netns_name}.conf -i /tmp/${netns_name}_zebra.pid -A 127.0.0.1 -z /tmp/${netns_name}_zebra.vty
 
     # gobgp configuration
-    run ip netns exec ${netns_name} gobgpd -f /vagrant_data/conf/gobgp/${netns_name}.toml > /vagrant_data/log/${netns_name}.log &
+    run ip netns exec ${netns_name} gobgpd -p -l debug -f /vagrant_data/conf/gobgp/${netns_name}.toml > /vagrant_data/log/${netns_name}.log &
   done
 
   # create netns_cr
@@ -48,7 +48,7 @@ create_netns() {
     # run ip netns exec ${netns_name} /usr/sbin/ospfd -d -f /vagrant_data/conf/ospfd/${netns_name}.conf -i /tmp/${netns_name}_ospfd.pid -A 127.0.0.1 -z /tmp/${netns_name}_zebra.vty
 
     # gobgp configuration
-    run ip netns exec ${netns_name} gobgpd -f /vagrant_data/conf/gobgp/${netns_name}.toml > /vagrant_data/log/${netns_name}.log &
+    run ip netns exec ${netns_name} gobgpd -p -l debug -f /vagrant_data/conf/gobgp/${netns_name}.toml > /vagrant_data/log/${netns_name}.log &
   done
 
   # create netns ac
@@ -62,7 +62,7 @@ create_netns() {
     run ip netns exec ${netns_name} /usr/sbin/zebra -d -f /vagrant_data/conf/zebra/${netns_name}.conf -i /tmp/${netns_name}_zebra.pid -A 127.0.0.1 -z /tmp/${netns_name}_zebra.vty
 
     # gobgp configuration
-    run ip netns exec ${netns_name} gobgpd -f /vagrant_data/conf/gobgp/${netns_name}.toml > /vagrant_data/log/${netns_name}.log &
+    run ip netns exec ${netns_name} gobgpd -p -l debug -f /vagrant_data/conf/gobgp/${netns_name}.toml > /vagrant_data/log/${netns_name}.log &
   done
 
   # create veth pair between eg and cr
